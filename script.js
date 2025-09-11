@@ -21,9 +21,8 @@ function initTypingEffect() {
     }
     
     const phrases = [
-        'Data-Driven Marketer',
-        'SEO Specialist',
-        'Web Analyst',
+        'Social Media Marketing',
+        'Website Designer',
         'Digital Marketing Enthusiast'
     ];
     let phraseIndex = 0;
@@ -35,7 +34,7 @@ function initTypingEffect() {
     // Function to type letters
     function type() {
         // Set end of phrase delay longer than other delays
-        const delayTime = isEnd ? 1000 : isDeleting ? 50 : 100;
+        const delayTime = isEnd ? 300 : isDeleting ? 70 : 100;
         
         // Current phrase being typed
         currentPhrase = phrases[phraseIndex];
