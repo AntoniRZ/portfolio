@@ -2069,3 +2069,44 @@ ul {
         right: 20px;
     }
 }
+
+/* Modal Gallery Styles */
+.modal-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.gallery-item {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.gallery-item figcaption {
+    padding: 0.75rem 1rem;
+    color: var(--text-color-dark);
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(17, 34, 64, 0.6);
+}
+
+@media screen and (max-width: 767px) {
+    .modal-gallery {
+        grid-template-columns: 1fr;
+    }
+}
