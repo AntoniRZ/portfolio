@@ -2109,4 +2109,150 @@ ul {
     .modal-gallery {
         grid-template-columns: 1fr;
     }
+}/* Modal video gallery */
+.modal-video-gallery .gallery-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.modal-video-gallery .gallery-item video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius, 8px);
+  box-shadow: var(--shadow, 0 10px 30px -10px rgba(2,12,27,0.7));
+  background: #000;
+}
+.modal-video-gallery .loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-light, #ccd6f6);
+}
+@media (max-width: 600px) {
+  .modal-video-gallery .gallery-item video {
+    max-height: 220px;
+  }
+}
+/* Video Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2,12,27,0.85);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.lightbox-overlay.active { opacity: 1; }
+.lightbox-content {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  background: var(--bg-color, #0a192f);
+  border-radius: var(--radius, 10px);
+  box-shadow: var(--shadow, 0 20px 60px -10px rgba(2,12,27,0.9));
+  padding: 20px;
+}
+.lightbox-content video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: var(--radius, 8px);
+  background: #000;
+}
+.lightbox-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 28px;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-light, #ccd6f6);
+  cursor: pointer;
+}
+.lightbox-caption {
+  margin-top: 10px;
+  color: var(--text-light, #ccd6f6);
+  text-align: center;
+}
+/* Play overlay button on gallery items */
+.gallery-item .play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  background: rgba(0,0,0,0.25);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.gallery-item:hover .play-overlay { opacity: 1; }
+@media (max-width: 600px) {
+  .gallery-item .play-overlay { opacity: 1; font-size: 36px; }
+  .lightbox-content { width: 95%; padding: 14px; }
+}
+/* Featured video in Digital Marketing modal */
+.modal-featured-video { margin-bottom: 16px; }
+.modal-featured-video video { width: 100%; height: auto; max-height: 70vh; border-radius: var(--radius, 8px); background: #000; box-shadow: var(--shadow, 0 10px 30px -10px rgba(2,12,27,0.7)); }
+.featured-caption { margin-top: 8px; text-align: center; color: var(--text-light, #ccd6f6); }
+/* Responsive Design for Tablets */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 5% auto;
+    }
+    
+    .modal-content h2 {
+        font-size: 22px;
+    }
+    
+    .video-container {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .video-caption {
+        font-size: 14px;
+    }
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 98%;
+        padding: 15px;
+        margin: 3% auto;
+        border-radius: 8px;
+    }
+    
+    .modal-content h2 {
+        font-size: 20px;
+        padding-bottom: 10px;
+    }
+    
+    .close-modal {
+        font-size: 28px;
+    }
+    
+    .video-container {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .video-caption {
+        font-size: 13px;
+        margin-top: 10px;
+    }
+    
+    .modal-description p {
+        font-size: 14px;
+    }
 }

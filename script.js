@@ -156,8 +156,7 @@ function initProjectModals() {
             const projectId = this.getAttribute('data-project');
             const modal = document.getElementById(`${projectId}Modal`);
             
-            if (modal) {
-                modal.style.display = 'block';
+            if (modal) { if (projectId === 'project1') { loadDigitalMarketingVideos(modal); } modal.style.display = 'block';
                 // Add a small delay before adding the active class for the animation
                 setTimeout(() => {
                     modal.classList.add('active');
@@ -380,4 +379,95 @@ function initMobileNav() {
             navLinks.classList.toggle('active');
         });
     }
+}
+// Load videos for Digital Marketing modal from server
+function loadDigitalMarketingVideos(modal) {
+  const content = modal.querySelector('.modal-content');
+  const description = content.querySelector('.modal-description');
+
+  // Featured player container
+  let featured = content.querySelector('#featuredVideoContainer');
+  if (!featured) {
+    featured = document.createElement('div');
+    featured.className = 'modal-featured-video';
+    featured.id = 'featuredVideoContainer';
+    const player = document.createElement('video');
+    player.id = 'featuredVideo';
+    player.controls = true;
+    player.playsInline = true;
+    const fallback = document.createTextNode('Browser Anda tidak mendukung video HTML5.');
+    player.appendChild(fallback);
+    const cap = document.createElement('div');
+    cap.className = 'featured-caption';
+    featured.appendChild(player);
+    featured.appendChild(cap);
+    if (description && description.parentNode) {
+      description.parentNode.insertBefore(featured, description.nextSibling);
+    } else {
+      content.insertBefore(featured, content.firstChild);
+    }
+  }
+  const featuredPlayer = featured.querySelector('#featuredVideo');
+  const featuredCaption = featured.querySelector('.featured-caption');
+
+  // Gallery container
+  let gallery = content.querySelector('#videoGallery');
+  if (!gallery) {
+    gallery = document.createElement('div');
+    gallery.className = 'modal-gallery modal-video-gallery';
+    gallery.id = 'videoGallery';
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    loading.textContent = 'Memuat video...';
+    gallery.appendChild(loading);
+    if (featured && featured.parentNode) {
+      featured.parentNode.insertBefore(gallery, featured.nextSibling);
+    } else if (description && description.parentNode) {
+      description.parentNode.insertBefore(gallery, description.nextSibling);
+    }
+  } else {
+    gallery.innerHTML = '<div class="loading">Memuat video...</div>';
+  }
+
+  // Fetch list of videos from server
+  fetch('list-videos.php', { headers: { 'Accept': 'application/json' } })
+    .then(res => res.json())
+    .then(data => {
+      gallery.innerHTML = '';
+      const list = (data && data.videos) ? data.videos : [];
+      if (!list.length) {
+        gallery.innerHTML = '<div class="loading">Tidak ada video ditemukan.</div>';
+        return;
+      }
+
+      // Set first video as featured
+      featuredPlayer.src = list[0].src;
+      featuredCaption.textContent = list[0].caption || '';
+
+      // Build gallery
+      list.forEach(item => {
+        const figure = document.createElement('figure');
+        figure.className = 'gallery-item';
+        const video = document.createElement('video');
+        video.src = item.src;
+        video.controls = true;
+        video.playsInline = true;
+        const caption = document.createElement('figcaption');
+        caption.textContent = item.caption || '';
+        figure.appendChild(video);
+        figure.appendChild(caption);
+        gallery.appendChild(figure);
+
+        // On click, update featured
+        video.addEventListener('click', () => {
+          featuredPlayer.src = item.src;
+          featuredCaption.textContent = item.caption || '';
+          featuredPlayer.play();
+        });
+      });
+    })
+    .catch(err => {
+      console.error('Gagal memuat video:', err);
+      gallery.innerHTML = '<div class="loading">Gagal memuat video.</div>';
+    });
 }
